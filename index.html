@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- displays site properly based on user's device -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              zinc: "#ff6257",
+              amber: "#242742",
+              blue: "#36384e",
+              yellow: "#9294a0",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+      * {
+        font-family: "Roboto", sans-serif;
+        font-size: 1rem;
+      }
+
+      button:active, button:focus {
+        background: linear-gradient(
+          90deg,
+          hsla(348, 99%, 66%, 1) 0%,
+          hsla(0, 92%, 67%, 1) 50%,
+          hsla(13, 97%, 62%, 1) 100%
+        );
+      }
+
+      .error {
+        color: #ff6257;
+        background: #f7d6d4;   
+         
+      }
+
+      .error-message {
+        color: #ff6257;
+        text-align: right;
+      }
+
+    </style>
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./assets/images/favicon-32x32.png"
+    />
+
+    <title>
+      Frontend Mentor | Newsletter sign-up form with success message
+    </title>
+  </head>
+  <body>
+    <main  id="subscribeForm" class="w-[100%] max-w-[1440px] text-[#242742] lg:bg-[#242742] lg:w-[100%] lg:flex lg:justify-center lg:items-center lg:h-screen">
+      <form action="" class="w-[100%] lg:bg-white lg:w-[60%] lg:h-auto lg:rounded-3xl">
+
+        <img
+          src="./assets/images/illustration-sign-up-mobile.svg"
+          alt="content-image-mobile"
+          class="mobile-image w-[100%] lg:hidden"
+        />
+        <div class="w-[100%] p-8">
+          <div class="content-text lg:flex lg:justify-between lg:gap-8">
+            <article class="flex flex-col gap-6 mb-10 lg:w-[50%] lg:mt-20">
+              <h1 class="header-text text-5xl font-bold pt-2">Stay updated!</h1>
+              <p>60,000+ product managers receiving monthly updates on:</p>
+              <ul class="flex flex-col gap-2">
+                <div class="flex gap-4 items-start">
+                  <img src="./assets/images/icon-list.svg" alt="icon-list" />
+                  <li>Product discovery and building what matters</li>
+                </div>
+                <div class="flex gap-4 items-start">
+                  <img src="./assets/images/icon-list.svg" alt="icon-list" />
+                  <li>Measuring to ensure updates are a success</li>
+                </div>
+                <div class="flex gap-4">
+                  <img src="./assets/images/icon-list.svg" alt="icon-list" />
+                  <li>And much more!</li>
+                </div>
+              </ul>
+              <div>
+                <div class="content-input flex flex-col gap-2 ">
+                  <label for="email-input" class="font-bold">Email address</label>
+                  <p class="error-message hidden">
+                    <small>Valid email required</small>
+                  </p>
+                  <input
+                    id="email"
+                    class="form-control border-solid border-2 border-[#9294a0] rounded-md p-2 cursor-pointer focus:outline-[#9294a0] active:bg-white"
+                    type="text"
+                    placeholder="email@company.com"
+                  />
+              </div>
+              <button type="submit" class="mt-6 p-4 bg-[#242742] text-white w-[100%] rounded-md cursor-pointer ">
+                Subscribe to monthly newsletter
+              </button>
+            </article>
+            <div class="">
+              <img
+              src="./assets/images/illustration-sign-up-desktop.svg"
+              alt="desktop-image"
+              class=" desktop-image md:hidden max-md:hidden lg:block"
+            />
+            </div>
+          </div>
+          
+       </div>
+      <div>
+        </div>
+      </form>
+   </main>
+
+    <!-- Success message start -->
+
+      <div id="thankyou-text" class="hidden text-[#242742] p-10 flex items-center justify-center min-h-screen lg:p-0 lg:hidden lg:bg-[#242742] lg:flex lg:justify-center lg:items-center">
+        <div class="lg:bg-white lg:w-[20%] lg:p-8 lg:rounded-2xl">
+          <img src="./assets/images/icon-success.svg" alt="success-icon" class="mb-10 mt-20 lg:mt-0 lg:mb-2 lg:w-[18%]">
+          <h1 class="text-5xl font-bold mb-6 lg:text-3xl lg:mb-3">Thanks for subscribing!</h1>
+          <p class="mb-40 lg:mb-4 lg:text-[10px]">
+            A confirmation email has been sent to ash@loremcompany.com. Please open
+            it and click the button inside to confirm your subscription.
+          </p>
+          <button id="dismiss-btn" class="mt-24 lg:mt-2 lg:p-1 p-4 bg-[#242742] text-white w-[100%] rounded-md cursor-pointer">Dismiss message</button>
+        </div>
+      </div>
+    <!-- Success message end -->
+
+    <script>
+      let submitForm = document.getElementById("subscribeForm");
+      let thankyouText = document.getElementById("thankyou-text");
+      let dismissBtn = document.getElementById("dismiss-btn");
+    
+
+      submitForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+   
+        let email = document.getElementById("email");
+        if (
+          email.value == "" ||
+          !email.value.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
+        ) {
+          return showErrors()
+        } else {
+          submitForm.style.display = "none";
+          thankyouText.style.display = "block";
+        }
+      });
+
+      function showErrors() {
+        const errorMss = document.querySelector(".error-message");
+        const input = document.querySelector("#email");
+        errorMss.classList.remove("hidden");
+        input.classList.add("error");
+      }
+
+
+      dismissBtn.addEventListener("click", () => {
+        thankyouText.style.display = "none";
+        submitForm.style.display = "block";
+        document.getElementById("email").value = "";
+      });
+    </script>
+  </body>
+</html>
+
+
+
